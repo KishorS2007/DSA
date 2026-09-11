@@ -10,7 +10,6 @@ class Solution {
     private void solve(int[] digits,List<Integer> curr,int mask){
         if(curr.size() == 3){
             ans.add(new ArrayList<>(curr));
-            System.out.println(curr);
             return;
         }
 
