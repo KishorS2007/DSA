@@ -1,18 +1,20 @@
-import java.util.*;
-class Solution {
-    public int numSubarraysWithSum(int[] nums, int goal) {
-        Map<Integer,Integer> map = new HashMap<>();
-        map.put(0,1);
-        int sum = 0 , cnt = 0;
-
+class Solution{
+    private static int solve(int[] nums , int k){
+        if(k < 0) return 0;
+        int l = 0 , cnt = 0 , sum = 0;
         for(int r = 0 ; r < nums.length ; r++){
             sum += nums[r];
 
-            cnt += map.getOrDefault(sum - goal , 0);
+            while(sum > k){
+                sum -= nums[l++];
+            }
 
-            map.put(sum , map.getOrDefault(sum,0)+1);
+            cnt += r-l+1;
         }
 
         return cnt;
+    }
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return solve(nums,goal) - solve(nums,goal-1);
     }
 }
