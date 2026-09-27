@@ -1,0 +1,1 @@
+<h2>minimum-queen-moves-to-reach-target Notes</h2><hr>[ Time taken: 29m 5s ]
