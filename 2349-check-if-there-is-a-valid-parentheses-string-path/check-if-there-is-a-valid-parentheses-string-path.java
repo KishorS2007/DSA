@@ -5,11 +5,13 @@ class Solution {
     public boolean hasValidPath(char[][] grid) {
         if(grid[0][0] == ')' || grid[grid.length-1][grid[0].length-1] == '(')
             return false;
-        
         this.grid = grid;
         n = grid.length;
         m = grid[0].length;
-        dp = new int[n][m][Math.max(n,m) * 2];
+        
+        if((m + n - 1) % 2 == 1) return false;
+        
+        dp = new int[n][m][m + n];
 
         return dfs(0,0,1) == 1;
     }
