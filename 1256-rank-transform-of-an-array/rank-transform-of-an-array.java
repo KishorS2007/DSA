@@ -2,7 +2,6 @@ import java.util.*;
 class Solution {
     public int[] arrayRankTransform(int[] arr) {
         int prev = Integer.MAX_VALUE , nextRank = 1;
-        int[] ans = new int[arr.length];
 
         PriorityQueue<Integer> q = new PriorityQueue<>();
         for(int i:arr) q.offer(i);
@@ -17,9 +16,9 @@ class Solution {
         }
 
         for(int i = 0 ; i < arr.length ; i++){
-            ans[i] = map.get(arr[i]);
+            arr[i] = map.get(arr[i]);
         }
 
-        return ans;
+        return arr;
     }
 }
