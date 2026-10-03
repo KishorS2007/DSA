@@ -1,33 +1,21 @@
+import java.util.*;
 class MedianFinder {
-    List<Integer> nums;
-    public MedianFinder() {
-        nums = new ArrayList<>();
-    }
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+
+    public MedianFinder() {}
     
     public void addNum(int num) {
+        minHeap.offer(num);
+        maxHeap.offer(minHeap.poll());
 
-        int l = 0 , r = nums.size() - 1;
-        while(l <= r){
-            int mid = l + (r - l) / 2;
-
-            if(nums.get(mid) <= num){
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
-        }
-
-        nums.add(l,num);
+        if(maxHeap.size() > minHeap.size()) minHeap.offer(maxHeap.poll());
     }
     
     public double findMedian() {
-        int size = nums.size();
+        if(minHeap.size() > maxHeap.size()) return minHeap.peek();
 
-        if(size % 2 == 1){
-            return nums.get(size / 2);
-        }
-
-        return (1.0 * nums.get(size / 2) + nums.get((size - 1) / 2)) / 2;
+        return (minHeap.peek() + maxHeap.peek() * 1.0) / 2;
     }
 }
 
