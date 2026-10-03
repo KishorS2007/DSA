@@ -6,10 +6,14 @@ class Solution {
 
         int[] ans = new int[k];
         PriorityQueue<Map.Entry<Integer,Integer>> q = new PriorityQueue<Map.Entry<Integer,Integer>>(
-            (a,b) -> b.getValue() - a.getValue()
+            (a,b) -> Integer.compare(a.getValue() , b.getValue())
         );
 
-        for(Map.Entry<Integer,Integer> entry : map.entrySet()) q.offer(entry);
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            q.offer(entry);
+            if(q.size() > k) q.poll();
+        }
+        
         for(int i = 0 ; i < k ; i++){
             ans[i] = q.poll().getKey();
         }
