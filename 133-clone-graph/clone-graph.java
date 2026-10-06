@@ -24,8 +24,8 @@ class Solution {
     public Node cloneGraph(Node node) {
         if(node == null) return node;
         
-        map.put(node , new Node(node.val));
-        Node newNode = map.get(node);
+        Node newNode;
+        map.put(node , newNode = new Node(node.val));
 
         // make connections
         for(Node neiNode : node.neighbors){
