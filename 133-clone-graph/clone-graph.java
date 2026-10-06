@@ -24,13 +24,16 @@ class Solution {
     public Node cloneGraph(Node node) {
         if(node == null) return node;
         
-        Node newNode;
-        map.put(node , newNode = new Node(node.val));
+        Node newNode = new Node(node.val);
+        map.put(node , newNode);
 
         // make connections
         for(Node neiNode : node.neighbors){
-            if(map.containsKey(neiNode)){
-                newNode.neighbors.add(map.get(neiNode));
+            
+            Node newNeiNode = map.get(neiNode);
+
+            if(newNeiNode != null){
+                newNode.neighbors.add(newNeiNode);
             } else {
                 newNode.neighbors.add(cloneGraph(neiNode));
             }
