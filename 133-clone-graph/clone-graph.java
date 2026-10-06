@@ -28,23 +28,17 @@ class Solution {
 
         // make connections
         for(Node neiNode : node.neighbors){
-            // map.putIfAbsent(neiNode , );
-            
-            // newNei
             Node newNei = map.computeIfAbsent(neiNode, _ -> new Node(neiNode.val));
             newThis.neighbors.add(newNei);
-
-        }
-
-        // move to neighbour 
-        for(Node neiNode : node.neighbors){
+            
             if(visited.contains(neiNode)) continue;
             dfs(neiNode);
+
         }
     }
     public Node cloneGraph(Node node) {
         if(node == null) return node;
-        
+
         dfs(node);
         return map.get(node);
     }
