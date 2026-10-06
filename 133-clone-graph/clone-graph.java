@@ -20,26 +20,22 @@ class Node {
 
 class Solution {
     Map<Node , Node> map = new HashMap<>();
-    Set<Node> visited = new HashSet<>();
-
-    private void dfs(Node node){
-        Node newThis = map.computeIfAbsent(node , _ -> new Node(node.val));
-        visited.add(node);
+   
+    public Node cloneGraph(Node node) {
+        if(node == null) return node;
+        
+        map.put(node , new Node(node.val));
+        Node newNode = map.get(node);
 
         // make connections
         for(Node neiNode : node.neighbors){
-            Node newNei = map.computeIfAbsent(neiNode, _ -> new Node(neiNode.val));
-            newThis.neighbors.add(newNei);
-            
-            if(visited.contains(neiNode)) continue;
-            dfs(neiNode);
-
+            if(map.containsKey(neiNode)){
+                newNode.neighbors.add(map.get(neiNode));
+            } else {
+                newNode.neighbors.add(cloneGraph(neiNode));
+            }
         }
-    }
-    public Node cloneGraph(Node node) {
-        if(node == null) return node;
 
-        dfs(node);
-        return map.get(node);
+        return newNode;
     }
 }
