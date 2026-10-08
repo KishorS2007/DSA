@@ -1,7 +1,28 @@
 class Trie {
     class TrieNode{
-        TrieNode[] childrens = new TrieNode[26];
-        boolean isEndOfWord;
+        private TrieNode[] childrens = new TrieNode[26];
+        private boolean isEndOfWord = false;
+
+        public boolean contains(char c){
+            return childrens[c-'a'] != null;
+        }
+
+        public boolean isEnd(){
+            return isEndOfWord;
+        }
+
+        public void setEnd(boolean val){
+            isEndOfWord = val;
+        }
+
+        public void put(char c){
+            if(contains(c)) return;
+            childrens[c-'a'] = new TrieNode();
+        }
+
+        public TrieNode get(char c){
+            return childrens[c-'a'];
+        }
     }
 
     TrieNode root = new TrieNode();
@@ -10,43 +31,29 @@ class Trie {
     
     public void insert(String word) {
         TrieNode node = root;
-
         for(char i : word.toCharArray()){
-            int pos = i - 'a';
-            
-            if(node.childrens[pos] == null){
-                node.childrens[pos] = new TrieNode();
-            }
-
-            node = node.childrens[pos];
+            node.put(i);
+            node = node.get(i);
         }
 
-        node.isEndOfWord = true;
+        node.setEnd(true);
     }
     
     public boolean search(String word) {
         TrieNode node = root;
-
         for(char i : word.toCharArray()){
-            int pos = i - 'a';
-                        
-            if(node.childrens[pos] == null) return false;
-
-            node = node.childrens[pos];
+            if(!node.contains(i)) return false;
+            node = node.get(i);
         }
 
-        return node.isEndOfWord;
+        return node.isEnd();
     }
     
     public boolean startsWith(String prefix) {
         TrieNode node = root;
-
         for(char i : prefix.toCharArray()){
-            int pos = i - 'a';
-                        
-            if(node.childrens[pos] == null) return false;
-
-            node = node.childrens[pos];
+            if(!node.contains(i)) return false;
+            node = node.get(i);
         }
 
         return true;
