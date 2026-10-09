@@ -1,52 +1,38 @@
 import java.util.*;
 class Solution {
     public int minInsertions(String s) {
-        Stack<Character> stack = new Stack<>();
-        int i = 0 , closeCount = 0 , insertions = 0;
+        int open = 0, close = 0 , insertions = 0;
 
-        while(i < s.length()){
-            char c = s.charAt(i);
+        for(char c : s.toCharArray()){
             if(c == '('){
-                if(closeCount != 0){
-                    if(stack.isEmpty()){
-                        insertions += 2;
-                    } else {
+                if(close != 0){
+                    if(open == 0) insertions += 2;
+                    else {
                         insertions++;
-                        stack.pop();
+                        open--;
                     }
-                    
-                    closeCount = 0;
+                    close = 0;
                 }
-
-                stack.push(c);
+                open++;
             } else {
-                closeCount++;
-                if(closeCount == 2){
-                    if(stack.isEmpty()){
-                        insertions++;
-                    } else {
-                        stack.pop();
-                    }
-
-                    closeCount = 0;
+                close++;
+                if(close == 2){
+                    if(open == 0) insertions++;
+                    else open--;
+                    close = 0;
                 }
             }
-            i++;
         }
 
-        if(closeCount != 0 && !stack.isEmpty()){
-            stack.pop();
+        if(close != 0 && open != 0){
+            open--;
             insertions++;
         
-        } else if(closeCount != 0){
-            insertions += 2 ;
-        }
-
-        while(!stack.isEmpty()){
+        } else if(close != 0){
             insertions += 2;
-            stack.pop();
         }
 
+        insertions += (open * 2);
         return insertions;
     }
 }
