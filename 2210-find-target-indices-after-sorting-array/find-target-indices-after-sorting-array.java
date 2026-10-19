@@ -1,23 +1,14 @@
 class Solution {
     public List<Integer> targetIndices(int[] nums, int target) {
-        int[] freq = new int[101];
+        int smallCount = 0 , targetCount = 0;
+        for(int num : nums) {
+            if(num == target) targetCount++;
+            else if(num < target) smallCount++;
+        }
+
         List<Integer> ans = new ArrayList<>();
-
-        for(int i : nums) freq[i]++;
-        
-        int sortedIdx = 0;
-        for(int i = 1 ; i <= 100 ; i++){
-            if(freq[i] == 0) continue;
-
-            if(i == target){
-                for(int j = 0 ; j < freq[i] ; j++){
-                    ans.add(sortedIdx + j);
-                }
-
-                break;
-            }
-
-            sortedIdx += freq[i];
+        for(int i = 0 ; i < targetCount ; i++){
+            ans.add(smallCount + i);
         }
 
         return ans;
