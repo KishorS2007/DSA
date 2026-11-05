@@ -1,8 +1,7 @@
 class Solution {
     private int[][] properties;
     private boolean[] visited;
-    // private List<List<Integer>> adj;
-    private boolean[][] adj = new boolean[101][101];
+    private List<List<Integer>> adj;
 
     private int intersect(int i , int j){
         int common = 0;
@@ -25,28 +24,22 @@ class Solution {
 
     private void visit(int node){
         visited[node] = true;
-        // for(int nei : adj.get(node)){
-        //     if(!visited[nei]) visit(nei);
-        // }
-        for(int nei = 0 ; nei < 101 ; nei++){
-            if(adj[node][nei] && !visited[nei]) visit(nei);
+        for(int nei : adj.get(node)){
+            if(!visited[nei]) visit(nei);
         }
     }
 
     public int numberOfComponents(int[][] properties, int k) {
         final int n = properties.length;
         this.properties = properties;
-        // adj = new ArrayList<>();
-        // for(int i = 0 ; i < n ; i++) adj.add(new ArrayList<>());
+        adj = new ArrayList<>();
+        for(int i = 0 ; i < n ; i++) adj.add(new ArrayList<>());
 
         for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < n ; j++){
-                if(i == j) continue;
+            for(int j = i + 1 ; j < n ; j++){
                 if(intersect(i,j) >= k){
-                    // adj.get(i).add(j);
-                    // adj.get(j).add(i);
-                    adj[i][j] = true;
-                    adj[j][i] = true;
+                    adj.get(i).add(j);
+                    adj.get(j).add(i);
                 }
             }
         }
