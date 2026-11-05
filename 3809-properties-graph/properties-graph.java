@@ -1,25 +1,19 @@
+import java.util.*;
+import java.util.function.*;
 class Solution {
     private int[][] properties;
     private boolean[] visited;
     private List<List<Integer>> adj;
 
     private int intersect(int i , int j){
-        int common = 0;
-        boolean[] distinct = new boolean[101];
+        Set<Integer> s = Arrays.stream(properties[i])
+                        .boxed()
+                        .collect(Collectors.toSet());
 
-        for(int x : properties[i]){
-            if(distinct[x]) continue;
-            distinct[x] = true;
-
-            for(int y : properties[j]){
-                if(x == y){
-                    common++;
-                    break;
-                }
-            }
-        }
-
-        return common;
+        return (int) Arrays.stream(properties[j])
+                .distinct()
+                .filter(x -> s.contains(x))
+                .count();
     }
 
     private void visit(int node){
