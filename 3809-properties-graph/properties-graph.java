@@ -6,14 +6,19 @@ class Solution {
     private List<List<Integer>> adj;
 
     private int intersect(int i , int j){
-        Set<Integer> s = Arrays.stream(properties[i])
-                        .boxed()
-                        .collect(Collectors.toSet());
+        Set<Integer> s1 = new HashSet<>() , s2 = new HashSet<>();
 
-        return (int) Arrays.stream(properties[j])
-                .distinct()
-                .filter(x -> s.contains(x))
-                .count();
+        for(int k = 0 ; k < properties[0].length ; k++){
+            s1.add(properties[i][k]);
+            s2.add(properties[j][k]);
+        }
+
+        int count = 0;
+        for(int num : s1){
+            if(s2.contains(num)) count++; 
+        }
+
+        return count;
     }
 
     private void visit(int node){
