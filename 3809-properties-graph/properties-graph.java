@@ -5,10 +5,12 @@ class Solution {
 
     private int intersect(int i , int j){
         int common = 0;
-        Set<Integer> distinct = new HashSet<>();
+        boolean[] distinct = new boolean[101];
+
         for(int x : properties[i]){
-            if(distinct.contains(x)) continue;
-            distinct.add(x);
+            if(distinct[x]) continue;
+            distinct[x] = true;
+
             for(int y : properties[j]){
                 if(x == y){
                     common++;
