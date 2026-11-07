@@ -23,27 +23,28 @@ class Solution {
             serverQ.offer(new int[]{servers[i] , i , 0});
         }
 
+        
         int[] ans = new int[m];
         int t = 0;
         for(int j = 0 ; j < m ; j++){
+            if(serverQ.isEmpty()){
+                t = workingQ.peek()[2];
+            }
+
             while(!workingQ.isEmpty() && workingQ.peek()[2] <= t){
                 serverQ.offer(workingQ.poll());
             }
 
-            if(serverQ.isEmpty()){
-                t = workingQ.peek()[2];
-                while(!workingQ.isEmpty() && workingQ.peek()[2] <= t){
-                    serverQ.offer(workingQ.poll());
-                }
-            }
-
             int[] curr = serverQ.poll();
+
             ans[j] = curr[1];
 
+            // t = Math.max(t , curr[2]);
             curr[2] = tasks[j] + t;
-
-            workingQ.offer(curr);
+            
+            // t++;
             t = Math.max(t,j+1);
+            workingQ.offer(curr);
         }
 
         return ans;
